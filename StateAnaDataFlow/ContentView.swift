@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
    @StateObject private var timer = TimerCounter()
-@EnvironmentObject private var user: UserSettings
+    @EnvironmentObject private var user: UserSettings
     var body: some View {
         VStack {
             Text("Hi, \(user.name)!")
@@ -22,8 +22,30 @@ struct ContentView: View {
             
             ButtonView(timer: timer)
             Spacer()
+            Spacer()
+            Spacer()
+    
+            
+            Button(action: doLogout) {
+                Text("Logout")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+            }
+            .frame(width: 200, height: 60)
+            .background(.blue)
+            .cornerRadius(20)
+            .overlay {
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.black, lineWidth: 4)
+            }
+            .padding(.bottom)
         }
        
+    }
+    
+    private func doLogout() {
+        user.isLoggedIn.toggle()
     }
 }
 struct ContentView_Previews: PreviewProvider {
