@@ -9,18 +9,35 @@ import SwiftUI
 
 struct LoginView: View {
     @State private var name = ""
+    @State private var characterColor: Color = .red
+    @State private var isButtonDisable = true
     @EnvironmentObject private var user: UserSettings
+    
+    
     
     var body: some View {
         VStack {
-            TextField("Enter your name...", text: $name )
-                .multilineTextAlignment(.center)
+            HStack {
+                TextField("Enter your name...", text: $name )
+                    .multilineTextAlignment(.center)
+                    .frame(width: 200)
+                    .padding(.leading, 50)
+                    .padding(.trailing, 30)
+               
+                Text("\(name.count)")
+                    .foregroundColor(characterColor)
+            }
+            .onChange(of: name) { _ in
+                checkCharacterCount()
+            }
+        
             Button(action: login) {
                 HStack {
                     Image(systemName: "checkmark.circle")
                     Text("Ok")
                 }
             }
+            .disabled(isButtonDisable)
         }
     }
     
@@ -28,6 +45,16 @@ struct LoginView: View {
         if !name.isEmpty {
             user.name = name
             user.isLoggedIn.toggle()
+        }
+    }
+
+    private  func checkCharacterCount() {
+        if (0...3).contains(name.count) {
+            characterColor = .red
+            isButtonDisable = true
+        } else {
+            characterColor = .green
+            isButtonDisable = false
         }
     }
 }
