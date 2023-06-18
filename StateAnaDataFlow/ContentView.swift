@@ -36,6 +36,7 @@ struct ContentView: View {
             .overlay {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(.black, lineWidth: 4)
+            
             }
             .padding(.bottom)
         }
@@ -69,6 +70,7 @@ struct ButtonView: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(.black, lineWidth: 4)
         }
+        .disabled(timer.disableButton)
     }
 }
 

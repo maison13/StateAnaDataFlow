@@ -12,7 +12,7 @@ final class TimerCounter: ObservableObject {
     
     var counter = 3
     var buttonTitle = "Start"
-    let objectWillChange = ObservableObjectPublisher()
+    var disableButton = false
        
     private var timer: Timer?
     
@@ -36,6 +36,7 @@ final class TimerCounter: ObservableObject {
         } else {
             killTimer()
             buttonTitle = "Reset"
+            disableButton.toggle()
         }
         
         objectWillChange.send()
@@ -50,8 +51,10 @@ final class TimerCounter: ObservableObject {
         if buttonTitle == "Reset" {
             counter = 3
             buttonTitle = "Start"
+            
         } else {
             buttonTitle = "Wait..."
+            disableButton.toggle()
         }
         
         objectWillChange.send()
