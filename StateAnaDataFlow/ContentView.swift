@@ -25,14 +25,10 @@ struct ContentView: View {
             
             ButtonView(timer: timer)
             Spacer()
-            Spacer()
-            Spacer()
     
             Button(action: doLogout) {
                 Text("Logout")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .borderStyle()
             }
             .frame(width: 200, height: 60)
             .background(.blue)
@@ -64,9 +60,7 @@ struct ButtonView: View {
     var body: some View {
         Button(action: timer.startTimer) {
             Text(timer.buttonTitle)
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
+                .borderStyle()
         }
         .frame(width: 200, height: 60)
         .background(.red)
@@ -77,3 +71,20 @@ struct ButtonView: View {
         }
     }
 }
+
+struct DefaultTextStyle: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .font(.title)
+    }
+}
+
+extension Text {
+    func borderStyle() -> some View {
+        modifier(DefaultTextStyle())
+    }
+}
+

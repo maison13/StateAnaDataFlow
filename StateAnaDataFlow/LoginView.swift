@@ -18,7 +18,7 @@ struct LoginView: View {
     var body: some View {
         VStack {
             HStack {
-                TextField("Enter your name...", text: $name )
+                TextField("Enter your name...", text: $name)
                     .multilineTextAlignment(.center)
                     .frame(width: 200)
                     .padding(.leading, 50)
