@@ -11,6 +11,7 @@ struct LoginView: View {
     @State private var name = ""
     @State private var characterColor: Color = .red
     @State private var isButtonDisable = true
+    @State private var showAlert = false
     @EnvironmentObject private var user: UserSettings
     
     private let storageManager = StorageManager.shared
@@ -23,14 +24,17 @@ struct LoginView: View {
                     .frame(width: 200)
                     .padding(.leading, 50)
                     .padding(.trailing, 30)
-               
+                    
                 Text("\(name.count)")
                     .foregroundColor(characterColor)
             }
             .onChange(of: name) { _ in
                 checkCharacterCount()
+                
             }
-        
+            .alert("Ошибка ввода!", isPresented: $showAlert, actions: {}) {
+                Text("Имя не должно содержать цифры!")
+            }
             Button(action: checkLogin) {
                 HStack {
                     Image(systemName: "checkmark.circle")
@@ -48,11 +52,18 @@ struct LoginView: View {
     }
     
     private func checkLogin() {
+        // проверка ввода на цифры
+        if let value = Double(name) {
+            showAlert.toggle()
+            name = ""
+        }
+        // переход на второй экран
         if !name.isEmpty {
             user.name = name
             storageManager.save(loginData: name)
             user.isLoggedIn.toggle()
         }
+        
     }
 
     private  func checkCharacterCount() {
