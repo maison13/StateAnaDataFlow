@@ -15,7 +15,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("Hi, \(user.name)!")
+            Text("Hi, \(storageManager.fetchLoginData())!")
                 .font(.largeTitle)
                 .padding(.top, 100)
             Text(timer.counter.formatted())
