@@ -10,12 +10,10 @@ import Combine
 
 final class TimerCounter: ObservableObject {
     
-    
     var counter = 3
     var buttonTitle = "Start"
     let objectWillChange = ObservableObjectPublisher()
        
-    
     private var timer: Timer?
     
     func startTimer() {
@@ -28,7 +26,6 @@ final class TimerCounter: ObservableObject {
                 repeats: true
             )
         }
-        
         
         buttonDidTapper()
     }

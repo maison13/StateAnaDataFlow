@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-   @StateObject private var timer = TimerCounter()
+    @StateObject private var timer = TimerCounter()
     @EnvironmentObject private var user: UserSettings
+    
+    private let storageManager = StorageManager.shared
+    
     var body: some View {
         VStack {
             Text("Hi, \(user.name)!")
@@ -25,7 +28,6 @@ struct ContentView: View {
             Spacer()
             Spacer()
     
-            
             Button(action: doLogout) {
                 Text("Logout")
                     .font(.title)
@@ -46,6 +48,8 @@ struct ContentView: View {
     
     private func doLogout() {
         user.isLoggedIn.toggle()
+        user.name = ""
+        storageManager.deleteLogin(data: user.name)
     }
 }
 struct ContentView_Previews: PreviewProvider {

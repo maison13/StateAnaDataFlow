@@ -13,7 +13,7 @@ struct LoginView: View {
     @State private var isButtonDisable = true
     @EnvironmentObject private var user: UserSettings
     
-    
+    private let storageManager = StorageManager.shared
     
     var body: some View {
         VStack {
@@ -31,7 +31,7 @@ struct LoginView: View {
                 checkCharacterCount()
             }
         
-            Button(action: login) {
+            Button(action: checkLogin) {
                 HStack {
                     Image(systemName: "checkmark.circle")
                     Text("Ok")
@@ -39,11 +39,18 @@ struct LoginView: View {
             }
             .disabled(isButtonDisable)
         }
+        .onAppear {
+            if !storageManager.fetchLoginData().isEmpty {
+                user.isLoggedIn.toggle()
+            }
+        }
+        
     }
     
-    private func login() {
+    private func checkLogin() {
         if !name.isEmpty {
             user.name = name
+            storageManager.save(loginData: name)
             user.isLoggedIn.toggle()
         }
     }
